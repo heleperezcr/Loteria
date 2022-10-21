@@ -14,10 +14,12 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     val cartas = arrayOf(R.drawable.a1,R.drawable.a2,R.drawable.a3,R.drawable.a4,R.drawable.a5,R.drawable.a6)
-    val sonidos = arrayOf(R.raw.b1,R.raw.b2,R.raw.b3,R.raw.b4,R.raw.b5,R.raw.b6,)
+    val sonidos = arrayOf(R.raw.b1,R.raw.b2,R.raw.b3,R.raw.b4,R.raw.b5,R.raw.b6)
     var num = 0
     var numeros = ArrayList<Int>()
     var hilo =  HiloBarajear(this)
+
+    var terminada = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         //
         comenzar.setOnClickListener {
             mostrarImagen()
-
         }
 
         //boton barajear
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         //boton Ganador
         ganador.setOnClickListener {
-
+            terminada = true
         }
 
     }
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     fun mostrarImagen() = GlobalScope.launch {
         var contador = 0
 
-        while (contador <cartas.size){
+        while (contador < cartas.size && !terminada){
 
             //num = (Math.random()*5+1).toInt()
             //comparaNumero()
@@ -56,6 +57,10 @@ class MainActivity : AppCompatActivity() {
             audio(numeros[contador])
             contador++
             delay(2500)
+            if (contador == cartas.size) {
+                return@launch
+            }
+
         }
         /*for(mensaje in mensajes){
             //Esto es por si traba la interfaz
