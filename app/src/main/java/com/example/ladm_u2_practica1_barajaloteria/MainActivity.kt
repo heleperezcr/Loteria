@@ -1,33 +1,42 @@
 package com.example.ladm_u2_practica1_barajaloteria
 
+import android.content.Context
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.core.view.isInvisible
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
     val cartas = arrayOf(R.drawable.a1,R.drawable.a2,R.drawable.a3,R.drawable.a4,R.drawable.a5,R.drawable.a6)
     val sonidos = arrayOf(R.raw.b1,R.raw.b2,R.raw.b3,R.raw.b4,R.raw.b5,R.raw.b6,)
     var num = 0
     var numeros = ArrayList<Int>()
+    var hilo =  HiloBarajear(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //
         comenzar.setOnClickListener {
             mostrarImagen()
-            //esto es para reproducir sonidos
-            //var mp = MediaPlayer.create(this, sonidos[0])
-            //mp.start()'
-            //
+
         }
 
-        sonido.setOnClickListener {
-            var mp = MediaPlayer.create(this, sonidos[0])
-            mp.start()
+        //boton barajear
+        barajear.setOnClickListener {
+                hilo.start()
+            Toast.makeText(this, "Se completo el barajeo", Toast.LENGTH_LONG)
+        }
+
+        //boton Ganador
+        ganador.setOnClickListener {
+
         }
 
     }
@@ -38,13 +47,13 @@ class MainActivity : AppCompatActivity() {
 
         while (contador <cartas.size){
 
-            num = (Math.random()*5+1).toInt()
-            comparaNumero()
+            //num = (Math.random()*5+1).toInt()
+            //comparaNumero()
 
             runOnUiThread {
-                carta.setImageResource(cartas[num])
+                carta.setImageResource(cartas[numeros[contador]])
             }
-            audio(num)
+            audio(numeros[contador])
             contador++
             delay(2500)
         }
@@ -76,8 +85,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    //------------------------------------------------------
 
+    //------------------------------------------------------
     fun audio(numero:Int) {
         /*var c=0
         while(c<sonidos.size){
@@ -88,8 +97,28 @@ class MainActivity : AppCompatActivity() {
         var mp = MediaPlayer.create(this, sonidos[numero])
         mp.start()
 
+    }
+    //-------------------------------------------------------
+}
 
-
+//------------Hilo-----------------------------------------------
+class HiloBarajear(puntero:MainActivity) : Thread(){
+    var p = puntero
+    var cont = 0
+    override fun run() {
+        super.run()
+        p.cartas.isEmpty()
+        while (cont < p.cartas.size) {
+            p.num = (Math.random()*5+1).toInt()
+            runCatching {
+                p.comparaNumero()
+            }
+            //p.comparaNumero()
+            //p.numeros.add(p.num)
+            cont++
+            sleep(200)
+        }
 
     }
 }
+//-----------------------------------------------------------
