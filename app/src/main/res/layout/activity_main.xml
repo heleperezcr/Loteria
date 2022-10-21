@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:padding="20dp"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -28,31 +29,32 @@
         android:layout_height="wrap_content"
         android:text="BARAJEAR"
         android:id="@+id/barajear"
-        android:layout_below="@+id/carta"/>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/carta"
+        android:layout_marginTop="10dp"/>
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Comenzar"
         android:id="@+id/comenzar"
-        android:layout_toEndOf="@+id/barajear"
-        android:layout_below="@id/carta"
-        android:layout_marginLeft="10dp"/>
+        android:layout_below="@id/barajear"
+        android:layout_centerHorizontal="true"
+        />
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="GANADOR"
         android:id="@+id/ganador"
-        android:layout_below="@id/barajear"
-        android:layout_marginLeft="10dp"/>
+        android:layout_below="@id/comenzar"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="MOSTRAR RESTANTES"
         android:id="@+id/restantes"
-        android:layout_below="@id/comenzar"
-        android:layout_toRightOf="@id/ganador"
-        android:layout_marginLeft="10dp"
+        android:layout_below="@id/ganador"
+        android:layout_centerHorizontal="true"
         />
 
 </RelativeLayout>

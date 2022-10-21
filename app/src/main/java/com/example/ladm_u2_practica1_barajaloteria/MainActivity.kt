@@ -36,12 +36,14 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Se completo el barajeo", Toast.LENGTH_LONG)
                 .show()
             comenzar.isEnabled = true
+            barajear.isEnabled = false
         }
 
         comenzar.setOnClickListener {
             mostrarImagen()
             ganador.isEnabled = true
             barajear.isEnabled = false
+            comenzar.isEnabled = false
         }
 
         //boton Ganador
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             terminada = true
             comenzar.isEnabled = false
             restantes.isEnabled = true
+            ganador.isEnabled = false
         }
 
         restantes.setOnClickListener {
@@ -61,19 +64,21 @@ class MainActivity : AppCompatActivity() {
     fun mostrarImagen() = GlobalScope.launch {
         var contador = 0
 
-        while (contador < cartas.size && !terminada){
+        while (contador <= cartas.size && !terminada){
 
             //num = (Math.random()*5+1).toInt()
             //comparaNumero()
 
-            runOnUiThread {
-                carta.setImageResource(cartas[numeros[contador]])
-            }
-            audio(numeros[contador])
-            contador++
-            delay(2500)
-            if (contador == cartas.size) {
+            if (contador >= cartas.size) { //No funcciona aún
                 return@launch
+            }else {
+
+                runOnUiThread {
+                    carta.setImageResource(cartas[numeros[contador]])
+                }
+                audio(numeros[contador])
+                contador++
+                delay(2500)
             }
 
         }
