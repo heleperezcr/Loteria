@@ -25,19 +25,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //
-        comenzar.setOnClickListener {
-            mostrarImagen()
-        }
+
+        comenzar.isEnabled = false
+        ganador.isEnabled = false
+        restantes.isEnabled = false
 
         //boton barajear
         barajear.setOnClickListener {
-                hilo.start()
+            hilo.start()
             Toast.makeText(this, "Se completo el barajeo", Toast.LENGTH_LONG)
+                .show()
+            comenzar.isEnabled = true
+        }
+
+        comenzar.setOnClickListener {
+            mostrarImagen()
+            ganador.isEnabled = true
+            barajear.isEnabled = false
         }
 
         //boton Ganador
         ganador.setOnClickListener {
             terminada = true
+            comenzar.isEnabled = false
+            restantes.isEnabled = true
+        }
+
+        restantes.setOnClickListener {
+
         }
 
     }

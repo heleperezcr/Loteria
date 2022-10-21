@@ -43,6 +43,16 @@
         android:text="GANADOR"
         android:id="@+id/ganador"
         android:layout_below="@id/barajear"
-        android:layout_marginLeft="80dp"/>
+        android:layout_marginLeft="10dp"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="MOSTRAR RESTANTES"
+        android:id="@+id/restantes"
+        android:layout_below="@id/comenzar"
+        android:layout_toRightOf="@id/ganador"
+        android:layout_marginLeft="10dp"
+        />
 
 </RelativeLayout>
