@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }//for
             if(existe==1){
-                num = (Math.random() * 5 + 1).toInt()
+                num = (Math.random() * cartas.size + 1).toInt()
                 comparaNumero()
             }else{
                 numeros.add(num)
@@ -146,7 +146,6 @@ class HiloBarajear(puntero:MainActivity) : Thread(){
             cont++
             sleep(200)
         }
-
     }
 }
 //-----------------------------------------------------------
