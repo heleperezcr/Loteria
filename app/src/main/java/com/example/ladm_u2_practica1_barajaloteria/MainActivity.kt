@@ -64,21 +64,23 @@ class MainActivity : AppCompatActivity() {
     fun mostrarImagen() = GlobalScope.launch {
         var contador = 0
 
-        while (contador <= cartas.size && !terminada){
+        while (contador < cartas.size && !terminada){
+
+            println("Numeros mostrados: " + contador)
 
             //num = (Math.random()*5+1).toInt()
             //comparaNumero()
 
-            if (contador >= cartas.size) { //No funcciona aún
-                return@launch
-            }else {
-
                 runOnUiThread {
-                    carta.setImageResource(cartas[numeros[contador]])
+                    carta.setImageResource(cartas[numeros[contador]-1])
                 }
-                audio(numeros[contador])
+                audio(numeros[contador]-1)
                 contador++
+
+            println("COntaor " + contador)
                 delay(2500)
+            if (contador == cartas.size){
+                return@launch
             }
 
         }
@@ -93,18 +95,19 @@ class MainActivity : AppCompatActivity() {
 
     //-------------------------------------------------------------------
     fun comparaNumero(){
-        var c=0
+        var existe=0
         if(!numeros.size.equals(null)) {
             for (n in numeros) {
                 if (num == n) {
-                    c=1
+                    existe=1
                 }
             }//for
-            if(c==1){
+            if(existe==1){
                 num = (Math.random() * 5 + 1).toInt()
                 comparaNumero()
             }else{
                 numeros.add(num)
+                println("número agregado: "+ num)
             }
 
         }
@@ -134,7 +137,7 @@ class HiloBarajear(puntero:MainActivity) : Thread(){
         super.run()
         p.cartas.isEmpty()
         while (cont < p.cartas.size) {
-            p.num = (Math.random()*5+1).toInt()
+            p.num = (Math.random()*6+1).toInt()
             runCatching {
                 p.comparaNumero()
             }
