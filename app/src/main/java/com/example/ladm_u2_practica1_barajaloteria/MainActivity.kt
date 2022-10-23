@@ -49,9 +49,12 @@ class MainActivity : AppCompatActivity() {
 
         //boton Ganador
         ganador.setOnClickListener {
+            var mp = MediaPlayer.create(this, R.raw.loteria) //no se escuchó
+            mp.start()
             terminada = true
             comenzar.isEnabled = false
             restantes.isEnabled = true
+
             ganador.isEnabled = false
         }
 
