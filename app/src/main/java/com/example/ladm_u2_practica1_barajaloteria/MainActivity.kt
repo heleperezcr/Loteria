@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     var numeros = ArrayList<Int>()
     var hilo =  HiloBarajear(this)
 
+    var contador = 0
     var terminada = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,20 +56,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         restantes.setOnClickListener {
-
+            Toast.makeText(this, "Mostrando cartas restantes", Toast.LENGTH_LONG)
+                .show()
+            mostrarImagen()
+            terminada = false
+            restantes.isEnabled = false
         }
 
     }
     //-------------------------------------------------------------------
     //mostrar imagenes
     fun mostrarImagen() = GlobalScope.launch {
-        var contador = 0
+        //var contador = 0
 
         while (contador < cartas.size && !terminada){
-
             //num = (Math.random()*5+1).toInt()
             //comparaNumero()
-
                 runOnUiThread {
                     carta.setImageResource(cartas[numeros[contador]-1])
                 }
@@ -77,9 +80,9 @@ class MainActivity : AppCompatActivity() {
 
                 delay(2500)
             if (contador == cartas.size){
+                terminada = true
                 return@launch
             }
-
         }
         /*for(mensaje in mensajes){
             //Esto es por si traba la interfaz
