@@ -66,8 +66,6 @@ class MainActivity : AppCompatActivity() {
 
         while (contador < cartas.size && !terminada){
 
-            println("Numeros mostrados: " + contador)
-
             //num = (Math.random()*5+1).toInt()
             //comparaNumero()
 
@@ -77,7 +75,6 @@ class MainActivity : AppCompatActivity() {
                 audio(numeros[contador]-1)
                 contador++
 
-            println("COntaor " + contador)
                 delay(2500)
             if (contador == cartas.size){
                 return@launch
