@@ -32,19 +32,28 @@ class MainActivity : AppCompatActivity() {
     var contador = 0
     var terminada = false
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //
-
         comenzar.isEnabled = false
         ganador.isEnabled = false
         restantes.isEnabled = false
+
+
+         //var mp: MediaPlayer? = null
 
         //boton barajear
         barajear.setOnClickListener {
             try{
                 //numeros.clear()
+                var mp: MediaPlayer = MediaPlayer.create(this, R.raw.sevaysecorre)
+                mp.release()
+                mp = MediaPlayer.create(this, R.raw.sevaysecorre)
+                mp?.start()
+
                 hilo.start()
                 Toast.makeText(this, "Se completo el barajeo", Toast.LENGTH_LONG)
                     .show()
@@ -52,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 barajear.isEnabled = false
             }catch (e: Exception){
                 Toast.makeText(this, "error", Toast.LENGTH_LONG)
+                    .show()
             }
         }
 
@@ -64,13 +74,17 @@ class MainActivity : AppCompatActivity() {
 
         //boton Ganador
         ganador.setOnClickListener {
-            var mp = MediaPlayer.create(this, R.raw.loteria) //no se escuchó
-            mp.start()
+           /* var mp = MediaPlayer.create(this, R.raw.loteria) //no se escuchó
+            mp.start()*/
             terminada = true
             comenzar.isEnabled = false
             restantes.isEnabled = true
-
+            var mp: MediaPlayer = MediaPlayer.create(this, R.raw.loteria)
+            mp.release()
+            mp = MediaPlayer.create(this, R.raw.loteria)
+            mp?.start()
             ganador.isEnabled = false
+
         }
 
         restantes.setOnClickListener {
@@ -89,12 +103,13 @@ class MainActivity : AppCompatActivity() {
         //var contador = 0
 
         while (contador < cartas.size && !terminada){
+            println("conteo cartas mostradas: " + (contador+1))
             //num = (Math.random()*5+1).toInt()
             //comparaNumero()
                 runOnUiThread {
-                    carta.setImageResource(cartas[numeros[contador]-1])
+                    carta.setImageResource(cartas[numeros[contador] - 1])
                 }
-                audio(numeros[contador]-1)
+                audio(numeros[contador] - 1)
                 contador++
 
                 delay(2500)
@@ -134,16 +149,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     //------------------------------------------------------
-    fun audio(numero:Int) {
+    fun audio( numero:Int) {
         /*var c=0
         while(c<sonidos.size){
             var mp = MediaPlayer.create(this, sonidos[c])
             mp.start()
             c++
         }*/
-        var mp = MediaPlayer.create(this, sonidos[numero])
-        mp.start()
+        var mp: MediaPlayer = MediaPlayer.create(this, sonidos[numero])
+       // mp.reset()
+       //mp.stop()
+        mp.release()
 
+        mp = MediaPlayer.create(this, sonidos[numero])
+        mp?.start()
     }
     //-------------------------------------------------------
 }
@@ -154,9 +173,10 @@ class HiloBarajear(puntero:MainActivity) : Thread(){
     var cont = 0
     override fun run() {
         super.run()
+        //sleep(2000)
         //p.numeros.clear()
         while (cont < p.cartas.size) {
-            p.num = (Math.random()*6+1).toInt()
+            p.num = (Math.random()*p.cartas.size+1).toInt()
             runCatching {
                 p.comparaNumero()
             }
