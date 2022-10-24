@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             ganador.isEnabled = true
             barajear.isEnabled = false
             comenzar.isEnabled = false
+
         }
 
         //boton Ganador
@@ -109,10 +110,11 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread {
                     carta.setImageResource(cartas[numeros[contador] - 1])
                 }
+
                 audio(numeros[contador] - 1)
                 contador++
 
-                delay(2500)
+                delay(1500)
             if (contador == cartas.size){
                 terminada = true
                 return@launch
@@ -150,12 +152,7 @@ class MainActivity : AppCompatActivity() {
 
     //------------------------------------------------------
     fun audio( numero:Int) {
-        /*var c=0
-        while(c<sonidos.size){
-            var mp = MediaPlayer.create(this, sonidos[c])
-            mp.start()
-            c++
-        }*/
+        var audio:MediaPlayer?=null
         var mp: MediaPlayer = MediaPlayer.create(this, sonidos[numero])
        // mp.reset()
        //mp.stop()
@@ -163,6 +160,7 @@ class MainActivity : AppCompatActivity() {
 
         mp = MediaPlayer.create(this, sonidos[numero])
         mp?.start()
+        mp.setOnCompletionListener { mp.release()}
     }
     //-------------------------------------------------------
 }
