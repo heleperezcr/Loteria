@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         restantes.setOnClickListener {
-            Toast.makeText(this, "Mostrando cartas restantes", Toast.LENGTH_LONG)
+            Toast.makeText(baseContext, "Mostrando cartas restantes", Toast.LENGTH_LONG)
                 .show()
             mostrarImagen()
             terminada = false
@@ -121,11 +121,14 @@ class MainActivity : AppCompatActivity() {
                 audio(numeros[contador] - 1)
                 contador++
 
-                delay(1500)
+                delay(2500)
             if (contador == cartas.size){
                 runOnUiThread {
                     jugarDeNuevo.isEnabled = true
+                    Toast.makeText(baseContext, "Se han mostrado ya todas las cartas", Toast.LENGTH_LONG)
+                        .show()
                 }
+
                 terminada = true
                 a=true
                 return@launch
