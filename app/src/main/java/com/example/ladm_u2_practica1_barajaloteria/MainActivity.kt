@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         //
         comenzar.isEnabled = false
         ganador.isEnabled = false
@@ -66,8 +64,6 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "error", Toast.LENGTH_LONG)
                         .show()
                 }
-
-
         }
 
         comenzar.setOnClickListener {
@@ -105,10 +101,8 @@ class MainActivity : AppCompatActivity() {
             mostrarImagen()
             terminada = false
             restantes.isEnabled = false
-            barajear.isEnabled = true
-            if(contador== 54){
-                jugarDeNuevo.isEnabled = true
-            }
+            //barajear.isEnabled = true
+
         }
 
     }
@@ -129,6 +123,9 @@ class MainActivity : AppCompatActivity() {
 
                 delay(1500)
             if (contador == cartas.size){
+                runOnUiThread {
+                    jugarDeNuevo.isEnabled = true
+                }
                 terminada = true
                 a=true
                 return@launch
