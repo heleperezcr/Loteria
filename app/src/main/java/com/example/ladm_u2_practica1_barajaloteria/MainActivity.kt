@@ -1,18 +1,17 @@
 package com.example.ladm_u2_practica1_barajaloteria
 
-import android.content.Context
+import android.app.Activity
 import android.media.MediaPlayer
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.core.view.isInvisible
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
 
+class MainActivity : AppCompatActivity() {
     val cartas = arrayOf(R.drawable.a1,R.drawable.a2,R.drawable.a3,R.drawable.a4,R.drawable.a5,R.drawable.a6,R.drawable.a7,R.drawable.a8,R.drawable.a9,R.drawable.a10,
                          R.drawable.a11,R.drawable.a12,R.drawable.a13,R.drawable.a14,R.drawable.a15,R.drawable.a16,R.drawable.a17,R.drawable.a18,R.drawable.a19,R.drawable.a20,
                          R.drawable.a21,R.drawable.a22,R.drawable.a23,R.drawable.a24,R.drawable.a25,R.drawable.a26,R.drawable.a27,R.drawable.a28,R.drawable.a29,R.drawable.a30,
@@ -28,41 +27,47 @@ class MainActivity : AppCompatActivity() {
     var num = 0
     var numeros = ArrayList<Int>()
     var hilo =  HiloBarajear(this)
+    var hilo2 =  HiloBarajear(this)
 
     var contador = 0
     var terminada = false
-
+    var a = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
         //
         comenzar.isEnabled = false
         ganador.isEnabled = false
         restantes.isEnabled = false
-
+        jugarDeNuevo.isEnabled = false
 
          //var mp: MediaPlayer? = null
 
         //boton barajear
         barajear.setOnClickListener {
-            try{
-                //numeros.clear()
-                var mp: MediaPlayer = MediaPlayer.create(this, R.raw.sevaysecorre)
-                mp.release()
-                mp = MediaPlayer.create(this, R.raw.sevaysecorre)
-                mp?.start()
+                try {
+                    //numeros.clear()
+                    var mp: MediaPlayer = MediaPlayer.create(this, R.raw.sevaysecorre)
+                    mp.release()
+                    mp = MediaPlayer.create(this, R.raw.sevaysecorre)
+                    mp?.start()
 
-                hilo.start()
-                Toast.makeText(this, "Se completo el barajeo", Toast.LENGTH_LONG)
-                    .show()
-                comenzar.isEnabled = true
-                barajear.isEnabled = false
-            }catch (e: Exception){
-                Toast.makeText(this, "error", Toast.LENGTH_LONG)
-                    .show()
-            }
+                    hilo.start()
+                    Toast.makeText(this, "Se completo el barajeo", Toast.LENGTH_LONG)
+                        .show()
+                    comenzar.isEnabled = true
+                    barajear.isEnabled = false
+                } catch (e: Exception) {
+                    Toast.makeText(this, "error", Toast.LENGTH_LONG)
+                        .show()
+                }
+
+
         }
 
         comenzar.setOnClickListener {
@@ -71,6 +76,12 @@ class MainActivity : AppCompatActivity() {
             barajear.isEnabled = false
             comenzar.isEnabled = false
 
+        }
+
+        jugarDeNuevo.setOnClickListener {
+            val intent = intent
+            finish()
+            startActivity(intent)
         }
 
         //boton Ganador
@@ -95,6 +106,9 @@ class MainActivity : AppCompatActivity() {
             terminada = false
             restantes.isEnabled = false
             barajear.isEnabled = true
+            if(contador== 54){
+                jugarDeNuevo.isEnabled = true
+            }
         }
 
     }
@@ -102,7 +116,6 @@ class MainActivity : AppCompatActivity() {
     //mostrar imagenes
     fun mostrarImagen() = GlobalScope.launch {
         //var contador = 0
-
         while (contador < cartas.size && !terminada){
             println("conteo cartas mostradas: " + (contador+1))
             //num = (Math.random()*5+1).toInt()
@@ -117,16 +130,11 @@ class MainActivity : AppCompatActivity() {
                 delay(1500)
             if (contador == cartas.size){
                 terminada = true
+                a=true
                 return@launch
             }
         }
-        /*for(mensaje in mensajes){
-            //Esto es por si traba la interfaz
-            runOnUiThread {
-                et_2doPlanoSincrona.text = mensaje
-            }//
-            delay(2500)
-        }*/
+
     }
 
     //-------------------------------------------------------------------
@@ -163,6 +171,7 @@ class MainActivity : AppCompatActivity() {
         mp.setOnCompletionListener { mp.release()}
     }
     //-------------------------------------------------------
+
 }
 
 //------------Hilo-----------------------------------------------
